@@ -1,0 +1,16 @@
+{
+  "name": "house-rules-landing",
+  "version": "1.0.0",
+  "description": "House Rules marketing landing page",
+  "main": "index.html",
+  "scripts": {
+    "start": "serve .",
+    "dev": "serve ."
+  },
+  "devDependencies": {
+    "serve": "^14.2.0"
+  },
+  "engines": {
+    "node": ">=18.x"
+  }
+}
