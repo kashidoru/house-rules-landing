@@ -324,6 +324,95 @@
     color: var(--text-dim);
   }
 
+  /* ---------- App Preview ---------- */
+  .preview { border-top: 1px solid rgba(245,237,228,0.08); }
+
+  .preview__track {
+    display: flex;
+    gap: clamp(1.25rem, 3vw, 2rem);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 1.5rem;
+    scrollbar-width: thin;
+    scrollbar-color: var(--surface-2) transparent;
+  }
+
+  .preview__track::-webkit-scrollbar { height: 6px; }
+  .preview__track::-webkit-scrollbar-track { background: transparent; }
+  .preview__track::-webkit-scrollbar-thumb {
+    background: var(--surface-2);
+    border-radius: 3px;
+  }
+
+  .phone-frame {
+    flex: 0 0 auto;
+    width: clamp(220px, 28vw, 280px);
+    scroll-snap-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .phone-frame__device {
+    position: relative;
+    width: 100%;
+    border-radius: 28px;
+    overflow: hidden;
+    background: var(--surface);
+    border: 2px solid rgba(245,237,228,0.1);
+    box-shadow:
+      0 4px 24px -8px rgba(0,0,0,0.5),
+      inset 0 0 0 1px rgba(245,237,228,0.04);
+    transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+  }
+
+  .phone-frame__device:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow:
+      0 16px 40px -12px rgba(0,0,0,0.6),
+      inset 0 0 0 1px rgba(245,237,228,0.06);
+    border-color: rgba(255,200,87,0.3);
+  }
+
+  .phone-frame__device img {
+    width: 100%;
+    display: block;
+    aspect-ratio: 9 / 16;
+    object-fit: cover;
+  }
+
+  .phone-frame__label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .phone-frame__caption {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    text-align: center;
+    max-width: 22ch;
+    line-height: 1.4;
+  }
+
+  .preview__hint {
+    display: none;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    text-align: center;
+    margin-top: 0.5rem;
+    letter-spacing: 0.1em;
+  }
+
+  @media (max-width: 980px) {
+    .preview__hint { display: block; }
+  }
+
   /* ---------- Card showcase ---------- */
   .showcase { border-top: 1px solid rgba(245,237,228,0.08); }
 
@@ -505,6 +594,88 @@
     font-size: 0.75rem;
     color: var(--text-dim);
   }
+
+  /* ---------- Changelog ---------- */
+  .changelog {
+    border-top: 1px solid rgba(245,237,228,0.08);
+  }
+
+  .changelog__list {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .changelog__item {
+    background: var(--surface);
+    border: 1px solid rgba(245,237,228,0.07);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .changelog__version {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+
+  .changelog__date {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    margin-bottom: 0.75rem;
+  }
+
+  .changelog__changes {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  .changelog__changes ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .changelog__changes li {
+    padding-left: 1.2rem;
+    position: relative;
+    margin-bottom: 0.4rem;
+  }
+
+  .changelog__changes li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--pink);
+  }
+
+  .version-selector {
+    margin-top: 1rem;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .version-btn {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    border: 1px solid rgba(245,237,228,0.2);
+    background: transparent;
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .version-btn:hover, .version-btn.active {
+    background: var(--gold);
+    color: #1a0f1f;
+    border-color: var(--gold);
+  }
 </style>
 </head>
 <body>
@@ -567,7 +738,62 @@
     </div>
   </section>
 
+  <section class="preview" id="inside-the-app">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <p class="section__eyebrow">Inside the app</p>
+        <h2 class="section__title">Built for the table, not the tutorial.</h2>
+        <p class="section__body">Every screen is designed to keep the party moving — no menus to dig through, no confusion mid-round.</p>
+      </div>
+
+      <div class="preview__track">
+        <div class="phone-frame reveal reveal-1">
+          <div class="phone-frame__device">
+            <img src="images/settings.jpg" alt="House Rules — Settings screen" loading="lazy">
+          </div>
+          <span class="phone-frame__label">Settings</span>
+          <p class="phone-frame__caption">Sound, haptics, mode, score — tweak everything before the first draw.</p>
+        </div>
+
+        <div class="phone-frame reveal reveal-2">
+          <div class="phone-frame__device">
+            <img src="images/draw-card.jpg" alt="House Rules — Draw Card screen" loading="lazy">
+          </div>
+          <span class="phone-frame__label">Draw Card</span>
+          <p class="phone-frame__caption">One button. One name. Nothing else in the way.</p>
+        </div>
+
+        <div class="phone-frame reveal reveal-3">
+          <div class="phone-frame__device">
+            <img src="images/callout.jpg" alt="House Rules — Active Rules &amp; Call Out screen" loading="lazy">
+          </div>
+          <span class="phone-frame__label">Call Out</span>
+          <p class="phone-frame__caption">Tap a rule, pick who broke it. Dares and personal rules show only complete or not.</p>
+        </div>
+
+        <div class="phone-frame reveal reveal-4">
+          <div class="phone-frame__device">
+            <img src="images/spinner.jpg" alt="House Rules — Opponent Spinner screen" loading="lazy">
+          </div>
+          <span class="phone-frame__label">Randomize</span>
+          <p class="phone-frame__caption">Spin the wheel to pick an opponent for mini-games and 1v1 showdowns.</p>
+        </div>
+
+        <div class="phone-frame reveal">
+          <div class="phone-frame__device">
+            <img src="images/winner.jpg" alt="House Rules — Winner Selection screen" loading="lazy">
+          </div>
+          <span class="phone-frame__label">Pick a Winner</span>
+          <p class="phone-frame__caption">Tap the winner. Everyone else takes the hit.</p>
+        </div>
+      </div>
+
+      <p class="preview__hint">← swipe to see more →</p>
+    </div>
+  </section>
+
   <section class="showcase">
+
     <div class="wrap">
       <div class="section__head reveal">
         <p class="section__eyebrow">From the deck</p>
@@ -598,6 +824,10 @@
           <p class="section__eyebrow">Invite only</p>
           <h2 class="section__title">Got a code?</h2>
           <p class="section__body">Type it into the card. It flips, and your download starts.</p>
+          <div class="version-selector">
+            <button class="version-btn active" data-version="v2">Current (v2.0)</button>
+            <button class="version-btn" data-version="v1">Previous (v1.0)</button>
+          </div>
         </div>
 
         <div class="code-card reveal reveal-2" id="codeCard">
@@ -619,7 +849,48 @@
             <div class="code-card__face code-card__face--back">
               <p class="code-card__mark">Unlocked</p>
               <a class="btn btn--primary" id="downloadBtn" href="#" download>Download for Android</a>
+              <p style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-dim); margin-top: 0.5rem;" id="versionInfo">v2.0 - Current Stable</p>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="changelog">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <p class="section__eyebrow">What's new</p>
+        <h2 class="section__title">Recent updates</h2>
+      </div>
+
+      <div class="changelog__list">
+        <div class="changelog__item reveal reveal-1">
+          <p class="changelog__version">Version 2.0 (Coming Soon)</p>
+          <p class="changelog__date">August 21, 2026</p>
+          <div class="changelog__changes">
+            <ul>
+              <li>Added "Made by JADESSS" credit to the app</li>
+              <li>Updated landing page with version support</li>
+              <li>Added changelog section for tracking updates</li>
+              <li>Improved user experience with version selection</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="changelog__item reveal reveal-2">
+          <p class="changelog__version">Version 1.0</p>
+          <p class="changelog__date">August 16, 2026</p>
+          <div class="changelog__changes">
+            <ul>
+              <li>Initial release of House Rules</li>
+              <li>Core gameplay with 70+ unique cards</li>
+              <li>Support for 4-8 players</li>
+              <li>Multiple game modes (Drink/Forfeit)</li>
+              <li>Offline play support</li>
+              <li>Fixed crash issues with production builds</li>
+              <li>Resolved missing peer dependencies</li>
+            </ul>
           </div>
         </div>
       </div>
@@ -652,16 +923,51 @@
     // Replace with a real backend check if this ever needs to be secure.
     const CORRECT_CODE = 'CARDS';
 
-    // Replace this with the real hosted APK URL once it exists.
-    const APK_DOWNLOAD_URL = 'https://expo.dev/artifacts/eas/g6emE9j4lLQMd5vc__fUh7JCVX4m68U83KZvk4ygA78.apk';
+    // Version APK URLs
+    const APK_VERSIONS = {
+      latest: 'https://expo.dev/artifacts/eas/PENDING_BUILD.apk', // Will be updated after new build completes
+      v2: 'https://expo.dev/artifacts/eas/g6emE9j4lLQMd5vc__fUh7JCVX4m68U83KZvk4ygA78.apk', // Current stable version
+      v1: 'https://expo.dev/artifacts/eas/dwS798BstRJ1INyKDNKuDajFcWzVifEdgB_YWRV-pUo.apk' // First working version
+    };
+
+    let currentVersion = 'latest';
 
     const codeCard = document.getElementById('codeCard');
     const codeInput = document.getElementById('codeInput');
     const submitCode = document.getElementById('submitCode');
     const codeError = document.getElementById('codeError');
     const downloadBtn = document.getElementById('downloadBtn');
+    const versionInfo = document.getElementById('versionInfo');
+    const versionBtns = document.querySelectorAll('.version-btn');
 
-    downloadBtn.href = APK_DOWNLOAD_URL;
+    function updateDownloadUrl() {
+      downloadBtn.href = APK_VERSIONS[currentVersion];
+      const versionNames = {
+        v2: 'v2.0 - Current Stable',
+        v1: 'v1.0 - Previous'
+      };
+      versionInfo.textContent = versionNames[currentVersion] || currentVersion;
+    }
+
+    // Initialize with latest version
+    updateDownloadUrl();
+
+    // Version selector
+    versionBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        versionBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentVersion = btn.dataset.version;
+        updateDownloadUrl();
+
+        // Reset card if already flipped
+        if (codeCard.classList.contains('is-flipped')) {
+          codeCard.classList.remove('is-flipped');
+          codeInput.value = '';
+          codeError.textContent = '';
+        }
+      });
+    });
 
     function tryUnlock() {
       const value = codeInput.value.trim().toUpperCase();
