@@ -798,23 +798,25 @@
         flex-wrap: wrap;
       }
 
-      .version-btn {
+      .version-select {
         font-family: var(--font-mono);
         font-size: 0.75rem;
         padding: 0.5rem 1rem;
         border-radius: 8px;
         border: 1px solid rgba(245, 237, 228, 0.2);
-        background: transparent;
-        color: var(--text-dim);
+        background: var(--surface);
+        color: var(--text);
         cursor: pointer;
         transition: all 0.2s ease;
       }
 
-      .version-btn:hover,
-      .version-btn.active {
-        background: var(--gold);
-        color: #1a0f1f;
+      .version-select:hover {
         border-color: var(--gold);
+      }
+
+      .version-select:focus {
+        outline: 2px solid var(--gold);
+        outline-offset: 2px;
       }
     </style>
   </head>
@@ -1050,17 +1052,12 @@
                 <a class="btn btn--primary" id="downloadBtn" href="#" download
                   >Download for Android</a
                 >
-                <p
-                  style="
-                    font-family: var(--font-mono);
-                    font-size: 0.7rem;
-                    color: var(--text-dim);
-                    margin-top: 0.5rem;
-                  "
-                  id="versionInfo"
-                >
-                  v2.0 - Current Stable
-                </p>
+                <div class="version-selector">
+                  <select class="version-select" id="versionSelect">
+                    <option value="v2">v1.0.0 (Build 7) - Latest (Sept 16, 2026)</option>
+                    <option value="v1">v1.0.0 (Build 6) - Previous (Sept 16, 2026)</option>
+                  </select>
+                </div>
               </div>
             </div>
           </div>
@@ -1077,7 +1074,20 @@
 
         <div class="changelog__list">
           <div class="changelog__item reveal reveal-1">
-            <p class="changelog__version">Version 2.2</p>
+            <p class="changelog__version">Version 1.0.0 (Build 7)</p>
+            <p class="changelog__date">September 16, 2026</p>
+            <div class="changelog__changes">
+              <ul>
+                <li>Latest production build with all recent fixes</li>
+                <li>Updated Expo SDK to 57.0.0</li>
+                <li>Fixed download functionality on landing page</li>
+                <li>Production build with version code 7</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="changelog__item reveal reveal-2">
+            <p class="changelog__version">Version 1.0.0 (Build 6)</p>
             <p class="changelog__date">September 16, 2026</p>
             <div class="changelog__changes">
               <ul>
@@ -1092,23 +1102,7 @@
           </div>
 
           <div class="changelog__item reveal reveal-2">
-            <p class="changelog__version">Version 2.1</p>
-            <p class="changelog__date">September 16, 2026</p>
-            <div class="changelog__changes">
-              <ul>
-                <li>Enhanced Ball Fight mini-game visuals with character-specific silhouettes</li>
-                <li>Added orbiting weapon rendering using Skia silhouette paths</li>
-                <li>Implemented distinct dash style visualizations (8 unique styles)</li>
-                <li>Created character-specific projectile shapes (sword, fireball, lightning, shuriken, slash)</li>
-                <li>Audited and updated all 40 character visual profiles for consistency</li>
-                <li>Migrated to Skia PathBuilder API to eliminate deprecation warnings</li>
-                <li>Fixed React Hooks error in BallFightSkiaArena component</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="changelog__item reveal reveal-2">
-            <p class="changelog__version">Version 2.0</p>
+            <p class="changelog__version">Version 1.0.0 (Build 5)</p>
             <p class="changelog__date">August 21, 2026</p>
             <div class="changelog__changes">
               <ul>
@@ -1121,7 +1115,7 @@
           </div>
 
           <div class="changelog__item reveal">
-            <p class="changelog__version">Version 1.0</p>
+            <p class="changelog__version">Version 1.0.0 (Initial)</p>
             <p class="changelog__date">August 16, 2026</p>
             <div class="changelog__changes">
               <ul>
@@ -1170,47 +1164,37 @@
 
       // Version APK URLs
       const APK_VERSIONS = {
-        v2: "https://expo.dev/artifacts/eas/mU1l3PbpyR9SyXes-EOhCdUo-j7iz4d6hMop4_xbiZw.apk", // Latest with visual enhancements
-        v1: "https://expo.dev/artifacts/eas/Bw-pRMOami5OEpryjYV7VRBQ3mQhURuWna0kxH9hQXw.apk", // Previous with JADESSS credit
+        v2: "https://expo.dev/artifacts/eas/1gWkrsKSpDCoOC_9iA7oYnnOjAwk33PJHFRhQNhGhNs.apk", // Latest production build (Sept 16, 2026 - Build 7)
+        v1: "https://expo.dev/artifacts/eas/yisODAqeQPOI93XZqhYWY4Z6h1SNNMeayhJ1ZqMc-_g.apk", // Previous build (Sept 16, 2026 - Build 6)
       };
 
-      let currentVersion = "latest";
+      let currentVersion = "v2";
 
       const codeCard = document.getElementById("codeCard");
       const codeInput = document.getElementById("codeInput");
       const submitCode = document.getElementById("submitCode");
       const codeError = document.getElementById("codeError");
       const downloadBtn = document.getElementById("downloadBtn");
-      const versionInfo = document.getElementById("versionInfo");
-      const versionBtns = document.querySelectorAll(".version-btn");
+      const versionSelect = document.getElementById("versionSelect");
 
       function updateDownloadUrl() {
         downloadBtn.href = APK_VERSIONS[currentVersion];
-        const versionNames = {
-          v2: 'v2.2 - Current Stable',
-          v1: 'v2.1 - Previous'
-        };
-        versionInfo.textContent = versionNames[currentVersion] || currentVersion;
       }
 
       // Initialize with latest version
       updateDownloadUrl();
 
       // Version selector
-      versionBtns.forEach((btn) => {
-        btn.addEventListener("click", () => {
-          versionBtns.forEach((b) => b.classList.remove("active"));
-          btn.classList.add("active");
-          currentVersion = btn.dataset.version;
-          updateDownloadUrl();
+      versionSelect.addEventListener("change", () => {
+        currentVersion = versionSelect.value;
+        updateDownloadUrl();
 
-          // Reset card if already flipped
-          if (codeCard.classList.contains("is-flipped")) {
-            codeCard.classList.remove("is-flipped");
-            codeInput.value = "";
-            codeError.textContent = "";
-          }
-        });
+        // Reset card if already flipped
+        if (codeCard.classList.contains("is-flipped")) {
+          codeCard.classList.remove("is-flipped");
+          codeInput.value = "";
+          codeError.textContent = "";
+        }
       });
 
       function tryUnlock() {
