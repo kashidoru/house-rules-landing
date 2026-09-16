@@ -1025,10 +1025,6 @@
             <p class="section__body">
               Type it into the card. It flips, and your download starts.
             </p>
-            <div class="version-selector">
-              <button class="version-btn active" data-version="v2">Current (v2.1)</button>
-              <button class="version-btn" data-version="v1">Previous (v2.0)</button>
-            </div>
           </div>
 
           <div class="code-card reveal reveal-2" id="codeCard">
@@ -1081,6 +1077,21 @@
 
         <div class="changelog__list">
           <div class="changelog__item reveal reveal-1">
+            <p class="changelog__version">Version 2.2</p>
+            <p class="changelog__date">September 16, 2026</p>
+            <div class="changelog__changes">
+              <ul>
+                <li>Fixed cooldown logic - skills now properly respect cooldown timers</li>
+                <li>Moved domain effects outside arena box as border effects instead of overlays</li>
+                <li>Added enhanced visual skill effects for Todoroki (fire/ice blaze with shockwaves)</li>
+                <li>Added enhanced visual skill effects for Gojo (Hollow Purple impact with beams)</li>
+                <li>Fixed winner declaration bug in all-out and tournament modes</li>
+                <li>Balanced cooldowns for legendary and mythic characters (8-15s range)</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="changelog__item reveal reveal-2">
             <p class="changelog__version">Version 2.1</p>
             <p class="changelog__date">September 16, 2026</p>
             <div class="changelog__changes">
@@ -1176,8 +1187,8 @@
       function updateDownloadUrl() {
         downloadBtn.href = APK_VERSIONS[currentVersion];
         const versionNames = {
-          v2: 'v2.1 - Current Stable',
-          v1: 'v2.0 - Previous'
+          v2: 'v2.2 - Current Stable',
+          v1: 'v2.1 - Previous'
         };
         versionInfo.textContent = versionNames[currentVersion] || currentVersion;
       }
