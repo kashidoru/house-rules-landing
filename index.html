@@ -1054,8 +1054,9 @@
                 >
                 <div class="version-selector">
                   <select class="version-select" id="versionSelect">
-                    <option value="v2">v1.0.0 (Build 7) - Latest (Sept 16, 2026)</option>
-                    <option value="v1">v1.0.0 (Build 6) - Previous (Sept 16, 2026)</option>
+                    <option value="v3">v1.0.0 (Build 9) - Latest (Oct 7, 2026)</option>
+                    <option value="v2">v1.0.0 (Build 9) - Same build (older builds unavailable)</option>
+                    <option value="v1">v1.0.0 (Build 9) - Same build (older builds unavailable)</option>
                   </select>
                 </div>
               </div>
@@ -1074,6 +1075,33 @@
 
         <div class="changelog__list">
           <div class="changelog__item reveal reveal-1">
+            <p class="changelog__version">Version 1.0.0 (Build 9)</p>
+            <p class="changelog__date">October 7, 2026</p>
+            <div class="changelog__changes">
+              <ul>
+                <li>Fixed download links on landing page - updated to use new Expo EAS build URL</li>
+                <li>Production build with updated download functionality</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="changelog__item reveal reveal-2">
+            <p class="changelog__version">Version 1.0.0 (Build 8)</p>
+            <p class="changelog__date">October 6, 2026</p>
+            <div class="changelog__changes">
+              <ul>
+                <li>Improved Password Game with shuffled team order and optional role swaps between rounds</li>
+                <li>Improved carousel animation with smooth, consistent spin speed</li>
+                <li>Enhanced card design with real card look and better visual effects</li>
+                <li>Improved card text readability with better spacing and typography</li>
+                <li>Replaced emoji icons with MaterialCommunityIcons for professional UI</li>
+                <li>Updated Word Chain instructions to match actual gameplay mechanics</li>
+                <li>Fixed card flip animation to prevent text mirroring</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="changelog__item reveal reveal-2">
             <p class="changelog__version">Version 1.0.0 (Build 7)</p>
             <p class="changelog__date">September 16, 2026</p>
             <div class="changelog__changes">
@@ -1164,11 +1192,12 @@
 
       // Version APK URLs
       const APK_VERSIONS = {
-        v2: "https://expo.dev/artifacts/eas/1gWkrsKSpDCoOC_9iA7oYnnOjAwk33PJHFRhQNhGhNs.apk", // Latest production build (Sept 16, 2026 - Build 7)
-        v1: "https://expo.dev/artifacts/eas/yisODAqeQPOI93XZqhYWY4Z6h1SNNMeayhJ1ZqMc-_g.apk", // Previous build (Sept 16, 2026 - Build 6)
+        v3: "https://expo.dev/artifacts/eas/i3Zo2Gau0Yi5sw_kgMaELSs3gOO6xLuqwmHj11rJ9UA.apk", // Latest production build (Oct 7, 2026 - Build 9)
+        v2: "https://expo.dev/artifacts/eas/i3Zo2Gau0Yi5sw_kgMaELSs3gOO6xLuqwmHj11rJ9UA.apk", // Same build (older builds unavailable)
+        v1: "https://expo.dev/artifacts/eas/i3Zo2Gau0Yi5sw_kgMaELSs3gOO6xLuqwmHj11rJ9UA.apk", // Same build (older builds unavailable)
       };
 
-      let currentVersion = "v2";
+      let currentVersion = "v3";
 
       const codeCard = document.getElementById("codeCard");
       const codeInput = document.getElementById("codeInput");
